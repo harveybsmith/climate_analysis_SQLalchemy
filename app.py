@@ -1,5 +1,6 @@
 import pandas as pd
 import datetime as dt
+import numpy as np
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -121,12 +122,12 @@ def tobs():
 def trip1(start):
 
  # go back one year from start date and go to end of data for Min/Avg/Max temp   
-    start_date= dt.date(start, 2017-8-23)
-    last_year = dt.timedelta(days=365)
-    start = start_date-last_year
-    end =  dt.date(2017, 8, 23)
+    # start_date= dt.date(start, 2017-8-23)
+    # last_year = dt.timedelta(days=365)
+    # start = start_date-last_year
+    # end =  dt.date(2017, 8, 23)
     trip_data = session.query(func.min(Measurements.tobs), func.avg(Measurements.tobs), func.max(Measurements.tobs)).\
-        filter(Measurements.date >= start).filter(Measurements.date <= end).all()
+        filter(Measurements.date >= start).all()
     trip = list(np.ravel(trip_data))
     return jsonify(trip)
 
@@ -135,11 +136,11 @@ def trip1(start):
 def trip2(start,end):
 
   # go back one year from start/end date and get Min/Avg/Max temp     
-    start_date= dt.datetime.strptime(start, '%Y-%m-%d')
-    end_date= dt.datetime.strptime(end,'%Y-%m-%d')
-    last_year = dt.timedelta(days=365)
-    start = start_date-last_year
-    end = end_date-last_year
+    # start_date= dt.datetime.strptime(start, '%Y-%m-%d')
+    # end_date= dt.datetime.strptime(end,'%Y-%m-%d')
+    # last_year = dt.timedelta(days=365)
+    # start = start_date-last_year
+    # end = end_date-last_year
     trip_data = session.query(func.min(Measurements.tobs), func.avg(Measurements.tobs), func.max(Measurements.tobs)).\
         filter(Measurements.date >= start).filter(Measurements.date <= end).all()
     trip = list(np.ravel(trip_data))
